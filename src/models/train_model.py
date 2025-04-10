@@ -25,11 +25,12 @@ def main():
     params_file = home_dir.as_posix() + '/params.yaml'
     params = yaml.safe_load(open(params_file))["train_model"]
 
-    input_file = sys.argv[1]
+    input_file = sys.argv[1] # data/processed/
     data_path = home_dir.as_posix() + input_file
-    output_path = home_dir.as_posix() + '/models'
-    pathlib.Path(output_path).mkdir(parents=True, exist_ok=True)
+    output_path = home_dir.as_posix() + '/models' # save the output model in models folder
+    pathlib.Path(output_path).mkdir(parents=True, exist_ok=True) # if the folder don't exist then it will create
     
+    # creating model on train dataset
     TARGET = 'Class'
     train_features = pd.read_csv(data_path + '/train.csv')
     X = train_features.drop(TARGET, axis=1)
@@ -37,8 +38,6 @@ def main():
 
     trained_model = train_model(X, y, params['n_estimators'], params['max_depth'], params['seed'])
     save_model(trained_model, output_path)
-
-    
 
 if __name__ == "__main__":
     main()

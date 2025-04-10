@@ -5,12 +5,12 @@ stages:
     deps:
     - path: .\data\raw\creditcard.csv
       hash: md5
-      md5: e8ffcd27762aaf279e268eb849a060f9
-      size: 150825054
+      md5: b9b8f6db863399fcb89b0f103a82bfa4
+      size: 150828222
     - path: .\src\data\make_dataset.py
       hash: md5
-      md5: 5d87ea0853101b748b17af0be510c2ac
-      size: 1314
+      md5: f73df7ea4addceb1671e14fb66a0e2f7
+      size: 1767
     params:
       params.yaml:
         make_dataset.seed: 2023
@@ -18,46 +18,46 @@ stages:
     outs:
     - path: .\data\processed\
       hash: md5
-      md5: b21101ae3f5090f5af39e6f9cbdb21c3.dir
-      size: 151098829
+      md5: 5d5d733c83f1be9c48b6a0be088036ba.dir
+      size: 151101997
       nfiles: 2
   train_model:
     cmd: python .\src\models\train_model.py .\data\processed\
     deps:
     - path: .\data\processed\
       hash: md5
-      md5: b21101ae3f5090f5af39e6f9cbdb21c3.dir
-      size: 151098829
+      md5: 5d5d733c83f1be9c48b6a0be088036ba.dir
+      size: 151101997
       nfiles: 2
     - path: .\src\models\train_model.py
       hash: md5
-      md5: 5af92edffd22804f29af18c1efe94bbb
-      size: 1362
+      md5: 58d7d996288b85275e36d98b6841cec7
+      size: 1498
     outs:
     - path: .\models\
       hash: md5
-      md5: 6191af90def2b514e1128c7d91ae5877.dir
-      size: 397817
+      md5: 5fe21ae238dfe6e2cac142d105e27e06.dir
+      size: 3929
       nfiles: 1
   visualize:
     cmd: python .\src\visualization\visualize.py .\models\model.joblib .\data\processed\
     deps:
     - path: .\data\processed\
       hash: md5
-      md5: 45207c27b5aec2846e4532f5bee1631f.dir
-      size: 151098829
+      md5: 5d5d733c83f1be9c48b6a0be088036ba.dir
+      size: 151101997
       nfiles: 2
     - path: .\models\model.joblib
       hash: md5
-      md5: e01830bd03da0f4f328c34580d40d5b3
-      size: 3865
+      md5: f0f0e7f3639c480bea00b4123c16b41f
+      size: 3929
     - path: .\src\visualization\visualize.py
       hash: md5
-      md5: db86d2e43c664f095353e9ba6afe3393
-      size: 3687
+      md5: a951cb9e05770c73ccd52c00c5e604cb
+      size: 3896
     outs:
     - path: dvclive
       hash: md5
-      md5: e887b02afa678d483c083f4d3632dc94.dir
-      size: 18530385
+      md5: ed87dc5ccebe46582c36b62cdaec3ace.dir
+      size: 18532460
       nfiles: 8

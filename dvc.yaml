@@ -1,12 +1,18 @@
 stages:
+  # the name can be any but similar name to the file for better clarity
   make_dataset:
+    # the command to run the script of run a python file (.\src\data\make_dataset.py) using python and passing a parameter (.\data\raw\creditcard.csv)
+    # the parameter will be taken by the make_dataset.py as sys.argv[1]
     cmd: python .\src\data\make_dataset.py .\data\raw\creditcard.csv
+    # dependencies of the command (order does not matter)
     deps:
     - .\data\raw\creditcard.csv
     - .\src\data\make_dataset.py
+    # parameters to be passed to the command from the params.yaml file under the make_dataset section
     params:
     - make_dataset.test_split
     - make_dataset.seed
+    # outputs of the command (order does not matter) and where it will be stored or placed
     outs:
     - .\data\processed\
   train_model:

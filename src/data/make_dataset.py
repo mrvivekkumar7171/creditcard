@@ -23,18 +23,18 @@ def save_data(train, test, output_path):
 
 def main():
 
-    curr_dir = pathlib.Path(__file__)
-    home_dir = curr_dir.parent.parent.parent
-    params_file = home_dir.as_posix() + '/params.yaml'
-    params = yaml.safe_load(open(params_file))["make_dataset"]
+    curr_dir = pathlib.Path(__file__)# directory of the current file i.e. make_dataset.py
+    home_dir = curr_dir.parent.parent.parent # home directory of the project
+    params_file = home_dir.as_posix() + '/params.yaml' # path to params.yaml file # as_posix() converts string path to python path
+    params = yaml.safe_load(open(params_file))["make_dataset"] # load parameters related to make_dataset only from params.yaml file
 
-    input_file = sys.argv[1]
-    data_path = home_dir.as_posix() + input_file
-    output_path = home_dir.as_posix() + '/data/processed'
+    input_file = sys.argv[1] # Or /raw/creditcard.csv
+    data_path = home_dir.as_posix() + input_file # loacation of creditcard.csv file
+    output_path = home_dir.as_posix() + '/data/processed' # location to save the train and test datasets
     
-    data = load_data(data_path)
-    train_data, test_data = split_data(data, params['test_split'], params['seed'])
-    save_data(train_data, test_data, output_path)
+    data = load_data(data_path)# loading the data
+    train_data, test_data = split_data(data, params['test_split'], params['seed']) # seed is the factor to random generator in train, test split
+    save_data(train_data, test_data, output_path) # saving the train and test datasets
 
 if __name__ == "__main__":
     main()

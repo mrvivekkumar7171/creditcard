@@ -11,7 +11,7 @@ from matplotlib import pyplot as plt
 
 def evaluate(model, X, y, split, live, save_path):
     """
-    Dump all evaluation metrics and plots for given datasets.
+    Dump all evaluation metrics on test dataset and plots for given datasets.
 
     Args:
         model (sklearn.ensemble.RandomForestClassifier): Trained classifier.
@@ -22,12 +22,14 @@ def evaluate(model, X, y, split, live, save_path):
         save_path (str): Path to save the metrics.
     """
 
+    # Use the model to predict the target variable.
     predictions_by_class = model.predict_proba(X)
     predictions = predictions_by_class[:, 1]
 
     # Use dvclive to log a few simple metrics...
     avg_prec = metrics.average_precision_score(y, predictions)
     roc_auc = metrics.roc_auc_score(y, predictions)
+    # This will log the matrics to the dvclive to enable visualization
     if not live.summary:
         live.summary = {"avg_prec": {}, "roc_auc": {}}
     live.summary["avg_prec"][split] = avg_prec
@@ -55,7 +57,7 @@ def evaluate(model, X, y, split, live, save_path):
 
 def save_importance_plot(live, model, feature_names):
     """
-    Save feature importance plot.
+    Save feature importance plot for visualization.
 
     Args:
         live (dvclive.Live): DVCLive instance.
@@ -91,6 +93,7 @@ def main():
     output_path = home_dir.as_posix() + '/dvclive'
     pathlib.Path(output_path).mkdir(parents=True, exist_ok=True)
     
+    # evaluate the model on train and test datasets.
     TARGET = 'Class'
     train_features = pd.read_csv(data_path + '/train.csv')
     X_train = train_features.drop(TARGET, axis=1)
