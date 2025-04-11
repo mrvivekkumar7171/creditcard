@@ -9,6 +9,7 @@ stages:
     - .\data\raw\creditcard.csv
     - .\src\data\make_dataset.py
     # parameters to be passed to the command from the params.yaml file under the make_dataset section
+    # It is not compulsory to pass the params and without it, the command will also run.
     params:
     - make_dataset.test_split
     - make_dataset.seed
