@@ -14,6 +14,8 @@ def train_model(train_features, target, n_estimators, max_depth, seed):
     model.fit(train_features, target)
     return model
 
+# grid search and random search if used must be there
+
 def save_model(model, output_path):
     # Save the trained model to the specified output path
     joblib.dump(model, output_path + '/model.joblib')
