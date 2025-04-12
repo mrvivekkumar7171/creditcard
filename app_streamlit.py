@@ -8,13 +8,16 @@ model = load(model_path)
 
 def predict(features):
     # Make predictions using the loaded model
-    prediction = model.predict_proba([features])
+    prediction = model.predict([features])[0]  # class
+    # prediction = model.predict_proba([features])[0][0]  # Probability of class 0
+    # prediction = model.predict_proba([features])[0][1]  # Probability of class 1
     return prediction
 
 def main():
+    # Title of the web app
     st.title("Machine Learning Model Prediction")
 
-    # User input form
+    # User input form sliders
     Time = st.slider("Time", min_value=0.0, max_value=10.0, value=5.0)
     V1 = st.slider("V1", min_value=-10.0, max_value=10.0, value=5.0)
     V2 = st.slider("V2", min_value=-50.0, max_value=10.0, value=5.0)
@@ -46,6 +49,7 @@ def main():
     V28 = st.slider("V28", min_value=0.0, max_value=10.0, value=5.0)
     Amount = st.slider("Amount", min_value=0.0, max_value=1000.0, value=5.0)
 
+    # predict button to predict
     if st.button("Predict"):
         features = [Time,
                 V1,
@@ -84,4 +88,7 @@ def main():
 if __name__ == "__main__":
     main()
 
+# streamlit can create a interactive web page with python that can be shown to non-technical users.
+
+# streamlit:
 # streamlit run app_streamlit.py

@@ -42,7 +42,7 @@ class PredictionInput(BaseModel):
 
 
 # Load the pre-trained RandomForest model
-model_path = "model.joblib"
+model_path = "models/model.joblib"
 model = load(model_path)
 
 @app.get("/")
@@ -91,4 +91,20 @@ if __name__ == "__main__":
     # FastAPI + Swagger + Pydantic, enables us to go the docs page and then test the input validation.
     # we can run this using uvicorn, gunicorn, streamlit, flask, etc.
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8080)
+    uvicorn.run(app, host="127.0.0.1", port=8000)
+
+# Note: The Code of Uvicorn and Gunicorn will be the same, but the command to run the server will be different.
+
+# Uvicorn:
+# python app_uvicorn.py
+# Gunicorn:
+# gunicorn -w 4 -k uvicorn.workers.UvicornWorker app_gunicorn:app
+# - w 4 means it will create 4 workers or 4 copies of server (4 servers will run in parallel) and gunicorn only work in Linux/WSL.
+
+# Note: Unicorn can handle only one request at a time, that is not suitable for web server which must handle multiples users and multiple requests.
+
+# Uvicorn is a lightweight ASGI (Asynchronous Server Gateway Interface) server that specifically serves ASGI applications, such as those built with FastAPI.
+# It is responsible for handling the asynchronous aspects of the application, making it efficient for high-concurrency scenarios.
+
+# Gunicorn is a WSGI (Web Server Gateway Interface) server. While it is not designed for handling asynchronous tasks directly, it can be used to serve synchronous WSGI applications, including FastAPI applications.
+# Gunicorn is a pre-fork worker model server, meaning it spawns multiple worker processes to handle incoming requests concurrently. Each worker runs in a separate process and can handle one request at a time.
