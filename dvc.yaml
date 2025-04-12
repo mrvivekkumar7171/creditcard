@@ -1,3 +1,4 @@
+# for linux or macOS use forward slash (/) instead of backward slash (\) and remove . (dot) from the front of /data/raw/creditcard.csv, /data/processed/ and /models/model.joblib /data/processed/.
 stages:
   # the name can be any but similar name to the file for better clarity
   make_dataset:

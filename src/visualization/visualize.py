@@ -76,7 +76,8 @@ def save_importance_plot(live, model, feature_names):
 
 
 def main():
-
+    # as_posix is used to convert the path to a string in POSIX format for cross-platform compatibility.
+    # This is useful when the code is run on different operating systems (e.g., Windows, Linux, macOS).
     curr_dir = pathlib.Path(__file__)
     home_dir = curr_dir.parent.parent.parent
     # TODO - Optionally add visualization params as well
@@ -84,8 +85,9 @@ def main():
     # params = yaml.safe_load(open(params_file))["train_model"]
 
     model_file = sys.argv[1]
+    model_file_path = home_dir.as_posix() +  model_file
     # Load the model.
-    model = joblib.load(model_file)
+    model = joblib.load(model_file_path)
     
     # Load the data.
     input_file = sys.argv[2]

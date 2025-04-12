@@ -3,10 +3,12 @@ from fastapi import FastAPI
 from joblib import load
 from pydantic import BaseModel
 
+# creating object of FastAPI
 app = FastAPI()
 
 class PredictionInput(BaseModel):
     # Define the input parameters required for making predictions
+    # It will catch if the wrong data type is passed or not (prevent the model form crash)
     Time: float
     V1: float
     V2: float
@@ -86,5 +88,7 @@ def predict(input_data: PredictionInput):
     return {"prediction": prediction}
 
 if __name__ == "__main__":
+    # FastAPI + Swagger + Pydantic, enables us to go the docs page and then test the input validation.
+    # we can run this using uvicorn, gunicorn, streamlit, flask, etc.
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8080)
