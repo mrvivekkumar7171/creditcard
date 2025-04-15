@@ -31,7 +31,7 @@ jobs:
   # if CI is successful, then proceed to the next step
   # containerization of project (converting into image) and pushing the image to the ECR (Amazon Elastic Container Registry)
   build-and-push-ecr-image:
-    name: Build and Push Image to ECR
+    name: Build/Push Image to ECR
     # work when integration job is successful # without needs it will run in parallel
     needs: integration
     # this job runs on the latest version of Ubuntu
