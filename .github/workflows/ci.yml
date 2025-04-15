@@ -88,7 +88,7 @@ jobs:
     # self-hosted runner : a private runner because if your runner needs to install very big libraries (docker), softwares
     # and each time you use a normal/generic runner it will take to much time takes too much time. 
     # Also, we can add the part of code that we have to do again and again for each runner.
-    runs-on: self-hosted
+    runs-on: ubuntu-latest # self-hosted
     # run when the build-and-push-ecr-image job is successful
     needs: build-and-push-ecr-image
     steps:
