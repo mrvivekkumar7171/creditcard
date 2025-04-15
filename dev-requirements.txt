@@ -1,7 +1,7 @@
 # local package
 # -e .
 
-# external requirements : contains requirements for the model to be developed
+# external requirements : contains requirements for the model to be developed only
 fastapi
 scikit-learn
 pandas

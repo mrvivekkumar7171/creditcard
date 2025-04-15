@@ -1,4 +1,7 @@
-# external requirements : contains requirements for the model to be deployed
+# external requirements : contains requirements for the model to be deployed only
+# Once the model is trained, we need to deploy it. The requirements for deployment are different from the training requirements.
+# we don't need to need to plot the graphs, so we don't need matplotlib
+# we don't need to train the model, so we don't need to need to import pandas, numpy, scikit-learn etc.
 fastapi
 uvicorn
 joblib

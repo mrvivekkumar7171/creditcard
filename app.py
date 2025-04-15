@@ -94,12 +94,14 @@ if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)
     # uvicorn.run(app, host="127.0.0.1", port=8000)
 
+# app will create endpoint and uvicorn will run the server.
+
 # Note: The Code of Uvicorn and Gunicorn will be the same, but the command to run the server will be different.
 
 # Uvicorn:
-# python app_uvicorn.py
+# python app.py
 # Gunicorn:
-# gunicorn -w 4 -k uvicorn.workers.UvicornWorker app_gunicorn:app
+# gunicorn -w 4 -k uvicorn.workers.UvicornWorker app:app
 # - w 4 means it will create 4 workers or 4 copies of server (4 servers will run in parallel) and gunicorn only work in Linux/WSL.
 
 # Note: Unicorn can handle only one request at a time, that is not suitable for web server which must handle multiples users and multiple requests.

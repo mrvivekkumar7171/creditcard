@@ -2,6 +2,9 @@ name: CI Pipeline
 
 # Note: AWS_REGION will be ap-south-1 if Availability Zone under the Instances in EC2 in AWS is ap-south-1b.
 
+# This pipeline can also include make data and train model and tune model if ci/cd is done through AWS.
+# But, In this example we have performed make data and train model and tune model in the local machine.
+
 # This workflow is triggered on every push to the main branch.
 on:
   push:
@@ -29,6 +32,8 @@ jobs:
       # this step run the unit tests
       - name: Run unit tests
         run: echo "Running unit tests"
+
+# if the code has worked fine in the independent machine as mentioned in the above step of CI, we can proceed to with the docker/image creation.
 
   # if CI is successful, then proceed to the next step
   # containerization of project (converting into image) and pushing the image to the ECR (Amazon Elastic Container Registry)

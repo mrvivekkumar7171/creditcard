@@ -1,3 +1,20 @@
+Things to be added
+- Shifting the TEMP folder to the S3
+- AirFlow
+- AWS Event Bridge or alternative
+- MLflow Alternative to DVC
+- Run the app (model hosted endpoint) on multiple EC2 using the Auto Scaling Group
+- API gateway
+- connect the web domain of the SoftMax.com
+
+Things has been added
+- git : for code tracking/ version control
+- dvc : for model and data pipeline control
+- EC2 : for model deployment
+- ECR : for docker Registry (Alternative DockerHub)
+- GitHub Action : CI/CD
+
+
 creditcard
 ==============================
 

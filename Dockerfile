@@ -7,6 +7,8 @@ WORKDIR /app
 # Copy the required files and directory into the container at /app
 # COPY . /app # to copy everything
 COPY app.py /app/app.py
+# This is where we have to import model.joblib from the S3 or any model registry
+# here i have kept the model.joblib in the same directory to test the docker image
 COPY model.joblib /app/model.joblib
 COPY requirements.txt /app/requirements.txt
 
