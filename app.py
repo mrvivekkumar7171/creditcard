@@ -91,7 +91,8 @@ if __name__ == "__main__":
     # FastAPI + Swagger + Pydantic, enables us to go the docs page and then test the input validation.
     # we can run this using uvicorn, gunicorn, streamlit, flask, etc.
     import uvicorn
-    uvicorn.run(app, host="127.0.0.1", port=8000)
+    uvicorn.run(app, host="0.0.0.0", port=8000)
+    # uvicorn.run(app, host="127.0.0.1", port=8000)
 
 # Note: The Code of Uvicorn and Gunicorn will be the same, but the command to run the server will be different.
 

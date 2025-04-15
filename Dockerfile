@@ -5,12 +5,14 @@ FROM python:3.8-slim
 WORKDIR /app
 
 # Copy the required files and directory into the container at /app
+# COPY . /app # to copy everything
 COPY app.py /app/app.py
 COPY model.joblib /app/model.joblib
 COPY requirements.txt /app/requirements.txt
 
 # Install any needed packages specified in requirements.txt
 RUN pip install -r requirements.txt
+# RUN pip install --upgrade awscli # upgrade the AWS CLI
 
 # Copy files from S3 inside docker
 # RUN mkdir /app/models

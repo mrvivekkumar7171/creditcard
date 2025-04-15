@@ -1,38 +1,52 @@
 name: CI Pipeline
 
+# This workflow is triggered on every push to the main branch.
 on:
   push:
 
+# permissions required to perform the below jobs
 permissions:
   id-token: write
   contents: read
 
 jobs:
+  # Continuous Integration (CI)
   integration:
+    # this job runs on the latest version of Ubuntu
     name: Continuous Integration
     runs-on: ubuntu-latest
     steps:
+      # this step checks out the code from the repository
       - name: Checkout Code
         uses: actions/checkout@v3
 
+      # this step Lint the code
       - name: Lint code
         run: echo "Linting repository"
 
+      # this step run the unit tests
       - name: Run unit tests
         run: echo "Running unit tests"
 
+  # if CI is successful, then proceed to the next step
+  # containerization of project (converting into image) and pushing the image to the ECR (Amazon Elastic Container Registry)
   build-and-push-ecr-image:
-    name: Push to ECR
+    name: Build and Push Image to ECR
+    # work when integration job is successful # without needs it will run in parallel
     needs: integration
+    # this job runs on the latest version of Ubuntu
     runs-on: ubuntu-latest
     steps:
+      # this step checks out the code from the repository
       - name: Checkout Code
         uses: actions/checkout@v3
 
+      # this step install basic utilities
       - name: Install Utilities
         run: |
           sudo apt-get update
           sudo apt-get install -y jq unzip
+      # this step configure the AWS credentials and loading the credentials
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
@@ -40,10 +54,13 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
 
+      # this step login to the Amazon ECR
       - name: Login to Amazon ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v2
 
+      # this step build the docker image, tag and push it to the Amazon EC2
+      # before this you are required to create EC2 instance
       - name: Build, tag, and push image to Amazon ECR
         id: build-image
         env:
@@ -55,27 +72,38 @@ jobs:
           IMAGE_TAG: latest
         run: |
           # Build a docker container and
-          # push it to ECR so that it can
-          # be deployed to ECS.
+          # push it to ECR with the latest image tag so that it can be deployed to ECS.
+          # lastly print
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
-  
+
+  # if the image build and push is successful, then proceed to the next step
+  # Continuous Deployment (CD): pull the image from the ECR and run it on the EC2 instance
   Continuous-Deployment:
+    name: Continuous Deployment
+    # runner : a operating system which perform the job and delete the job after the job is done
+    # self-hosted runner : a private runner because if your runner needs to install very big libraries (docker), softwares
+    # and each time you use a normal/generic runner it will take to much time takes too much time. 
+    # Also, we can add the part of code that we have to do again and again for each runner.
     runs-on: self-hosted
+    # run when the build-and-push-ecr-image job is successful
     needs: build-and-push-ecr-image
     steps:
       - name: Configure AWS credentials
+        # this step configure the AWS credentials and loading the credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
 
+      # this step will login to the Amazon ECR
       - name: Login to Amazon ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v2
       
+      # this step will pull the latest image from the ECR
       - name: Pull latest images
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
@@ -84,11 +112,12 @@ jobs:
         run: |
           docker pull $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
       
+      # deleting the previous container
       - name: Delete Previous Container
         run: |
           docker rm -f creditcard || true
 
+      # this step will run the docker image
       - name: Run Docker Image to serve users
         run: |
           docker run -d -p 8080:8080 --ipc="host" --name=creditcard -e 'AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}' -e 'AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}' -e 'AWS_REGION=${{ secrets.AWS_REGION }}'  ${{secrets.AWS_ECR_LOGIN_URI}}/${{ secrets.ECR_REPOSITORY_NAME }}:latest
-      
