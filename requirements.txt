@@ -1,5 +1,5 @@
-# external requirements
+# external requirements : contains requirements for the model to be deployed
 fastapi
 uvicorn
 joblib
-scikit-learn==1.6.1 # This is needed by joblib to read and load the model
+scikit-learn # This is needed by joblib to read and load the model

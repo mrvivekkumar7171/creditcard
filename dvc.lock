@@ -31,13 +31,13 @@ stages:
       nfiles: 2
     - path: .\src\models\train_model.py
       hash: md5
-      md5: 58d7d996288b85275e36d98b6841cec7
-      size: 1498
+      md5: 1a91c841398ba6f266640cb26871ed60
+      size: 1555
     outs:
     - path: .\models\
       hash: md5
-      md5: 4944f34fa297bde59db4f87edc87226d.dir
-      size: 20249
+      md5: b94a9c2b5a426434baf64595b316606a.dir
+      size: 20137
       nfiles: 1
   visualize:
     cmd: python .\src\visualization\visualize.py .\models\model.joblib .\data\processed\
@@ -49,8 +49,8 @@ stages:
       nfiles: 2
     - path: .\models\model.joblib
       hash: md5
-      md5: d65d9774acd2eeb3fbf50eb3ef3fc91f
-      size: 20249
+      md5: 5cdc35020fa4afd908975304aba0cc31
+      size: 20137
     - path: .\src\visualization\visualize.py
       hash: md5
       md5: c7184afeba294dfb64a1c41765b37cdd
