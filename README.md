@@ -6,6 +6,8 @@ Things to be added
 - Run the app (model hosted endpoint) on multiple EC2 using the Auto Scaling Group
 - API gateway
 - connect the web domain of the SoftMax.com
+- Linting repository
+- Running unit tests
 
 Things has been added
 - git : for code tracking/ version control
@@ -14,6 +16,7 @@ Things has been added
 - ECR : for docker Registry (Alternative DockerHub)
 - GitHub Action : CI/CD
 
+- Visit Actions>New Workflow>select a workflow>click on Configure>take inspiration to create your .yml file for ci/cd
 
 creditcard
 ==============================

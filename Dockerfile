@@ -9,6 +9,7 @@ WORKDIR /app
 COPY app.py /app/app.py
 # This is where we have to import model.joblib from the S3 or any model registry
 # here i have kept the model.joblib in the same directory to test the docker image
+# generlly, we are copying the model.joblib in the docker image. except, for deep learning models.
 COPY model.joblib /app/model.joblib
 COPY requirements.txt /app/requirements.txt
 
