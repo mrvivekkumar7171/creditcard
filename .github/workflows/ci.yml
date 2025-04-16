@@ -97,7 +97,7 @@ jobs:
     # open the AWS > EC2 instance (if not then create) > click on instance ID > connect > EC2 instance connect > connect > open EC2 instance terminal
     # If asked name of the self-hosted runner give "creditcard-runner" or any other name else press Enter to continue with default.
     # to run it "./run.sh" in terminal and Status of the runner will be Idle and press ctrl + c to stop the self-hosted runner
-    runs-on: self-hosted # self-hosted # ubuntu-latest
+    runs-on: [self-hosted, creditcard-runner] # self-hosted # ubuntu-latest
     # run when the build-and-push-ecr-image job is successful
     needs: build-and-push-ecr-image
     steps:
