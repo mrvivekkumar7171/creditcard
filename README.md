@@ -17,6 +17,7 @@ Things has been added
 - GitHub Action : CI/CD
 
 - Visit Actions>New Workflow>select a workflow>click on Configure>take inspiration to create your .yml file for ci/cd
+- Visit https://github.com/aws-actions to know about the latest actions of aws
 
 creditcard
 ==============================

@@ -1,3 +1,4 @@
+# the docker file is the file which contains commands to build the docker image, document it will copy and task it will perform when called
 # Use an official Python runtime as a parent image
 FROM python:3.8-slim
 
